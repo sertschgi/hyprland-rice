@@ -5,6 +5,7 @@ mkdir ~/.cache/hyprland_rice/translated > /dev/null 2>&1
 
 template_files=(
   "colors.conf : $HOME/.config/hypr/colors.conf : hyprland-conf"
+  "hyprlock.conf : $HOME/.config/hypr/hyprlock.conf : hyprland-conf"
   "eww.scss : $HOME/.config/hypr/eww/eww.scss : scss"
   "waybar.css : $HOME/.config/hypr/waybar/style.css : css"
   "swaync.css : $HOME/.config/hypr/swaync/style.css : css"

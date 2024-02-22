@@ -23,7 +23,7 @@ yad
 sox
 mint-themes
 xcursor-simp1e-gruvbox-light
-gtklock
+hyprlock
 qt5-wayland
 eww-wayland
 git
