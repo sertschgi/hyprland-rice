@@ -49,6 +49,8 @@ blueman-applet &
 
 lxsession &
 
+hypridle &
+
 brightnessctl --restore
 
 eval "sleep 2; hyprctl reload" &
