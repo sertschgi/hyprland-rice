@@ -13,6 +13,8 @@ run_hook pre &
 
 [[ -f ~/.hyprland_rice/themes.txt ]] || touch ~/.hyprland_rice/themes.txt
 
+~/.config/hypr/scripts/load_brightness.sh
+
 rm -rf ~/.cache/swww > /dev/null 2>&1
 
 swww init
@@ -50,8 +52,6 @@ blueman-applet &
 lxsession &
 
 hypridle &
-
-brightnessctl --restore
 
 eval "sleep 2; hyprctl reload" &
 

@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-brightnessctl --save && notify-send 'Brightness Module' 'Screen brightness saved!' || notify-send 'Brightness Module' 'Failed to save screen brightness!'
+~/.config/hypr/scripts/save_brightness.sh && notify-send 'Brightness Module' 'Screen brightness saved!' || notify-send 'Brightness Module' 'Failed to save screen brightness!'
