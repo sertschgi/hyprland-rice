@@ -13,8 +13,6 @@ run_hook pre &
 
 [[ -f ~/.hyprland_rice/themes.txt ]] || touch ~/.hyprland_rice/themes.txt
 
-~/.config/hypr/scripts/load_brightness.sh &
-
 rm -rf ~/.cache/swww > /dev/null 2>&1
 
 swww init
@@ -58,5 +56,7 @@ eval "sleep 2; hyprctl reload" &
 eval "sleep 0.5; killall flameshot; pkill flameshot" &
 eval "sleep 1; killall flameshot; pkill flameshot" &
 eval "sleep 2; killall flameshot; pkill flameshot" &
+
+~/.config/hypr/scripts/load_brightness.sh &
 
 run_hook post &
