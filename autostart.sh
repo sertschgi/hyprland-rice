@@ -13,7 +13,7 @@ run_hook pre &
 
 [[ -f ~/.hyprland_rice/themes.txt ]] || touch ~/.hyprland_rice/themes.txt
 
-~/.config/hypr/scripts/load_brightness.sh
+~/.config/hypr/scripts/load_brightness.sh &
 
 rm -rf ~/.cache/swww > /dev/null 2>&1
 
