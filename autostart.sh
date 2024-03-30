@@ -38,7 +38,12 @@ else
   [[ $theme_refresh_id == $theme_refresh_id_old ]] || ~/.config/hypr/scripts/change_theme.sh "$theme_path"
 fi
 
-#set_wallpaper ~/.cache/hyprland_rice/theme/wallpaper.png
+swww kill
+killall swww
+pkill swww
+
+swww-daemon &
+
 swww img ~/.cache/hyprland_rice/theme/wallpaper.png -t none
 
 ~/.config/hypr/waybar/start
