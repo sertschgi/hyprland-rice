@@ -85,10 +85,9 @@
         "spacing": 10
     },
     "clock": {
-        // "timezone": "America/New_York",
         "tooltip-format": "{:%H:%M}",
         "tooltip": true,
-        "format-alt": "{:%B %d, %Y}",
+        "format-alt": "{:%A, %B %d, %Y}",
 	    "format": "{:%I:%M %p}"
     },
     "cpu": {
