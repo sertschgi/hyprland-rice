@@ -11,7 +11,7 @@
     // Modules configuration
     "custom/powermenu": {
 	"format": " ",
-	"on-click": "~/.config/hypr/eww/scripts/waybar/powermenu",
+	"on-click": "~/.config/hypr/waybar/scripts/powermenu.sh",
 	"tooltip": false,
     },
     "custom/swaync": {
