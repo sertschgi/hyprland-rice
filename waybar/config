@@ -22,7 +22,7 @@
     },
     "custom/menu": {
 	"format": " ",
-	"on-click": "~/.config/hypr/eww/scripts/waybar/bar_menu",
+	"on-click": "~/.config/hypr/waybar/scripts/bar_menu.sh",
 	"tooltip": false,
     },
     "wlr/workspaces": {
