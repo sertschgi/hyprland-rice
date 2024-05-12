@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-kitty || alacritty
+st || kitty || alacritty
