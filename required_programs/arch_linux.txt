@@ -2,7 +2,7 @@ cliphist
 hyprland
 waybar
 alacritty
-rofi-lbonn-wayland-git
+rofi-wayland
 swww
 libnotify
 notification-daemon
