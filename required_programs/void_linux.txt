@@ -2,8 +2,8 @@ cliphist
 hyprland
 Waybar
 alacritty
-rofi-wayland # PENDING
-swww # PENDING
+rofi-wayland # PENDING NIX
+swww # PENDING NIX
 libnotify
 notification-daemon
 SwayNotificationDaemon
@@ -14,7 +14,7 @@ blueman
 papirus-icon-theme
 noto-fonts-emoji
 lxsession
-grimblast # PENDING
+grimblast # PENDING NIX
 brightnessctl
 light
 nwg-look
@@ -25,7 +25,7 @@ xcursor-simp1e-themes
 hyprlock
 hypridle
 qt5-wayland
-eww-wayland # PENDING
+eww-wayland # PENDING NIX
 git
 xdg-desktop-portal
 xdg-desktop-portal-gtk

@@ -1,4 +1,7 @@
 # My Personal Hyprland Rice
+
+> NOTE: If you are installing on Void Linux, you will need to add this software repository: https://gitlab.com/Oglo12/oglo-void-repo
+
 > How to Install:
   1. Install all required programs in: `required_programs/YOUR_OS.txt`
   2. (Optional) Configure SDDM theme. [Click for tutorial.](https://linuxconfig.org/how-to-customize-the-sddm-display-manager-on-linux)
