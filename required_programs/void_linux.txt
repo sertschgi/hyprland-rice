@@ -1,6 +1,8 @@
 cliphist
 hyprland
 hyprland-protocols
+xorg
+mesa-dri
 Waybar
 alacritty
 rofi-wayland # PENDING NIX
