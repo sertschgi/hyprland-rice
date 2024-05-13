@@ -21,7 +21,7 @@ nwg-look
 yad
 sox
 mint-themes # PENDING
-xcursor-simp1e-themes
+xcursor-simp1e-themes # PENDING
 hyprlock
 hypridle
 qt5-wayland
