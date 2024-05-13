@@ -6,7 +6,7 @@ rofi-wayland # PENDING NIX
 swww # PENDING NIX
 libnotify
 notification-daemon
-SwayNotificationDaemon
+SwayNotificationCenter
 NetworkManager
 network-manager-applet
 bluez
