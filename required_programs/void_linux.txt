@@ -1,32 +1,31 @@
 cliphist
 hyprland
-waybar
+Waybar
 alacritty
-rofi-wayland
-swww
+rofi-wayland # PENDING
+swww # PENDING
 libnotify
 notification-daemon
-swaync
-networkmanager
+SwayNotificationDaemon
+NetworkManager
 network-manager-applet
 bluez
-bluez-utils
 blueman
 papirus-icon-theme
 noto-fonts-emoji
 lxsession
-grimblast-git
+grimblast # PENDING
 brightnessctl
 light
-nwg-look-bin
+nwg-look
 yad
 sox
-mint-themes
-xcursor-simp1e-gruvbox-light
+mint-themes # PENDING
+xcursor-simp1e-themes
 hyprlock
 hypridle
 qt5-wayland
-eww-wayland
+eww-wayland # PENDING
 git
 xdg-desktop-portal
 xdg-desktop-portal-gtk
