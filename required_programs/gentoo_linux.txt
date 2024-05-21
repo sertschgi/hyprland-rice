@@ -27,3 +27,4 @@ dev-vcs/git
 sys-apps/xdg-desktop-portal
 sys-apps/xdg-desktop-portal-gtk
 gui-libs/xdg-desktop-portal-hyprland
+media-sound/playerctl
