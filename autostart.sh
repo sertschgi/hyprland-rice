@@ -42,7 +42,7 @@ swww kill
 killall swww
 pkill swww
 
-swww-daemon &
+swww-daemon -f xrgb &
 
 swww img ~/.cache/hyprland_rice/theme/wallpaper.png -t none
 
