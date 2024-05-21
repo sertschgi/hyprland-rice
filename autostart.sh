@@ -15,7 +15,7 @@ run_hook pre &
 
 rm -rf ~/.cache/swww > /dev/null 2>&1
 
-swww-daemon &
+swww-daemon -f xrgb &
 
 swww img ~/.config/hypr/screen_pics/starting_rice.png -t none
 
