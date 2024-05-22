@@ -165,14 +165,14 @@
 
 (defwidget powermenu-poweroff-button []
           (powermenu-button :label ""
-                            :onclick "poweroff"
+                            :onclick "scripts/poweroff"
                             :class "powermenu-poweroff-button"
           )
 )
 
 (defwidget powermenu-reboot-button []
           (powermenu-button :label " "
-                            :onclick "reboot"
+                            :onclick "scripts/reboot"
                             :class "powermenu-reboot-button"
           )
 )
