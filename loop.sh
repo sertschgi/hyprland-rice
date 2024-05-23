@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 while [[ 1 == 1 ]]; do
+  # Volume cap.
   if [[ -f ~/.hyprland_rice/disable_vol_cap ]]; then
     echo "Volume cap disabled."
   else
@@ -13,6 +14,10 @@ while [[ 1 == 1 ]]; do
     cd ~
   fi
 
+  # Restart Waybar if it crashes.
+  pgrep waybar > /dev/null 2>&1 || $HOME/.config/hypr/waybar/start
+
+  # Reset and sleep.
   cd ~
   sleep 1
 done
