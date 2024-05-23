@@ -14,6 +14,8 @@ net-wireless/bluez
 net-wireless/bluez-tools
 net-wireless/blueman
 x11-themes/papirus-icon-theme
+media-fonts/noto
+media-fonts/noto-cjk
 media-fonts/noto-emoji
 lxde-base/lxsession
 app-misc/brightnessctl
@@ -29,3 +31,4 @@ sys-apps/xdg-desktop-portal
 sys-apps/xdg-desktop-portal-gtk
 gui-libs/xdg-desktop-portal-hyprland
 media-sound/playerctl
+media-sound/pavucontrol
