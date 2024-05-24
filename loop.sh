@@ -17,6 +17,11 @@ while [[ 1 == 1 ]]; do
   # Restart Waybar if it crashes.
   pgrep waybar > /dev/null 2>&1 || $HOME/.config/hypr/waybar/start
 
+  # Kill newest Waybar instance if there is more than one.
+  if [[ $(pgrep waybar | wc -l) -gt 1 ]]; then
+    pkill -n waybar
+  fi
+
   # Reset and sleep.
   cd ~
   sleep 1
