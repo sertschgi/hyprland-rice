@@ -68,3 +68,5 @@ eval "sleep 2; killall flameshot; pkill flameshot" &
 ~/.config/hypr/scripts/load_brightness.sh &
 
 run_hook post &
+
+hyprctl reload
