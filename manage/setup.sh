@@ -1,89 +1,62 @@
 #!/usr/bin/env bash
 
-configs=(
-    "Hyprland Rice" "$HOME/.config" "hypr" "https://gitlab.com/Oglo12/hyprland-rice.git"
-    "Alacritty" "$HOME/.config" "alacritty" "https://gitlab.com/Oglo12/hyprland-alacritty.git"
-    "Kitty" "$HOME/.config" "kitty" "https://gitlab.com/Oglo12/hyprland-kitty.git"
-    "Rofi" "$HOME/.config" "rofi" "https://gitlab.com/Oglo12/hyprland-rofi.git"
-)
+source "$HOME/.config/hypr/lib.sh"
 
-for u in $(seq 0 $((${#configs[@]} / 3))); do
-    coname=""
-    codir=""
-    foname=""
-    gitrl=""
+abort_on_existing () {
+    fail_msg="Found existing file/directory, aborting... ($1)"
 
-    for i in $(seq 0 3); do
-        cfgsv=${configs[$(($((u * 4)) + $i))]}
+    if [[ -d "$1" ]]; then
+        echo "$fail_msg"
 
-        if [[ $i == 0 ]]; then
-			coname="$cfgsv"
-        elif [[ $i == 1 ]]; then
-            codir="$cfgsv"
-        elif [[ $i == 2 ]]; then
-            foname="$cfgsv"
-        elif [[ $i == 3 ]]; then
-            gitrl="$cfgsv"
-        fi
-    done
-
-    if [[ $gitrl != "" ]]; then
-        echo "[i] => Setting up $coname..."
-
-        if [[ -d $codir ]]; then
-            echo -e "\033[0;31mIf you see this, it is a bug.\033[0m" > /dev/null
-        else
-            mkdir -p $codir
-        fi
-
-        cd $codir
-
-        get_mode=""
-
-        if [[ -d $foname ]]; then
-            echo "The directory $codir/$foname already exists, what now?"
-            echo " "
-            echo "1. Overwrite it."
-            echo "2. Overwrite it and make a backup. (Recommended)"
-            echo "3. Skip it."
-            echo " "
-
-            while [[ 1 == 1 ]]; do
-                read -p "Number: " ask_mode
-
-                if [[ $ask_mode == 1 ]]; then
-                    get_mode="overwrite"
-                    break
-                elif [[ $ask_mode == 2 ]]; then
-                    get_mode="backup"
-                    break
-                elif [[ $ask_mode == 3 ]]; then
-                    get_mode="skip"
-                    break
-                else
-                    echo "Invalid option, asking again."
-                fi
-            done
-        else
-            get_mode="populate"
-        fi
-
-        if [[ $get_mode == "populate" ]]; then
-            git clone "$gitrl" "$foname"
-        elif [[ $get_mode == "overwrite" ]]; then
-            rm -rf "$foname"
-            git clone "$gitrl" "$foname"
-        elif [[ $get_mode == "backup" ]]; then
-            mv "$foname" "${foname}_BACKUP"
-            git clone "$gitrl" "$foname"
-        elif [[ $get_mode == "skip" ]]; then
-            echo "Skipping $coname..."
-        fi
-
-        echo " "
+        exit 1
     fi
 
-    cd "$HOME"
+    if [[ -f "$1" ]]; then
+        echo "$fail_msg"
+
+        exit 1
+    fi
+}
+
+verify_dir () {
+    [[ -d "$1" ]] || mkdir -p "$1"
+}
+
+# Verify availability for configuration.
+abort_on_existing "$HOME/.config/hypr"
+
+for i in ${symlinks[@]}; do
+    check_path="$(echo "$i" | cut -f2 -d ':')"
+
+    abort_on_existing "$check_path"
+done
+
+verify_dir "$HOME/.config"
+cd "$HOME/.config"
+if git clone https://gitlab.com/Oglo12/hyprland-rice.git hypr; then
+    echo "Downloaded Hyprland configuration!"
+else
+    echo "Failed to download Hyprland configuration!"
+
+    exit 1
+fi
+
+cd "$HOME"
+
+for i in ${symlinks[@]}; do
+    l_name="$(echo "$i" | cut -f1 -d ':')"
+    real_path="$HOME/.config/hypr/symlinks/${l_name}"
+    symlink_path="$(echo "$i" | cut -f2 -d ':')"
+
+    echo "Symlinking '${l_name}' to: '${symlink_path}'"
+
+    if ln -s "$real_path" "$symlink_path"; then
+        echo "Successfully symlinked: '${l_name}'"
+    else
+        echo "Failed to symlink: '${l_name}'"
+
+        exit 1
+    fi
 done
 
 cd "$HOME"

@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
-
+symlinks=(
+    "alacritty:$HOME/.config/alacritty"
+    "kitty:$HOME/.config/kitty"
+    "rofi:$HOME/.config/rofi"
+)
 
 set_wallpaper () {
 	swww img "$1" -t grow --transition-pos center

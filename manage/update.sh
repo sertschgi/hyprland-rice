@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source "$HOME/.config/hypr/lib.sh"
+
 notify_flag=$1
 
 notify_core () {
@@ -16,66 +18,52 @@ critical_notify () {
 	notify_core "$1" "-u critical"
 }
 
-missing_array=()
+# If the user is still using legacy directories, upgrade them to symlinks! :D
+for i in ${symlinks[@]}; do
+    l_name="$(echo "$i" | cut -f1 -d ':')"
+    real_path="$HOME/.config/hypr/symlinks/${l_name}"
+    symlink_path="$(echo "$i" | cut -f2 -d ':')"
 
-missing () {
-	missing_array+=("$1")
-}
+    do_symlink="no"
 
-configs=()
+    if [[ -f "${symlink_path}/.hyprland_rice" ]]; then
+        echo "Removing legacy directory... (${l_name})"
+        notify "Removing legacy directory... (${l_name})"
 
-add_conf () {
-	configs+=("$1" "$2" "$3" "$4")
-}
+        rm -rf "${symlink_path}"
 
-add_conf "$HOME/.config/hypr/" "Hyprland" "origin" "main"
-add_conf "$HOME/.config/alacritty/" "Alacritty" "origin" "main"
-add_conf "$HOME/.config/kitty/" "Kitty" "origin" "main"
-add_conf "$HOME/.config/rofi/" "Rofi" "origin" "main"
+        do_symlink="yes"
+    else
+        [[ -d "${symlink_path}" ]] || do_symlink="yes"
+    fi
 
-for u in $(seq 0 $((${#configs[@]} / 3)))
-do
-	codir=""
-	coname=""
-	coorigin=""
-	comain=""
+    if [[ "$do_symlink" == "yes" ]]; then
+        echo "Found legacy directory! Upgrading to symlink... (${l_name})"
+        notify "Upgrading legacy directory to symlink... (${l_name})"
 
-	for i in $(seq 0 3)
-	do
-		if [[ $i == 0 ]]; then
-			codir=${configs[$(($((u * 4)) + $i))]}
-		elif [[ $i == 1 ]]; then
-			coname=${configs[$(($((u * 4)) + $i))]}
-		elif [[ $i == 2 ]]; then
-			coorigin=${configs[$(($((u * 4)) + $i))]}
-		elif [[ $i == 3 ]]; then
-			comain=${configs[$(($((u * 4)) + $i))]}
-		fi
-	done
+        if ln -s "$real_path" "$symlink_path"; then
+            echo "Successfully symlinked: '${l_name}'"
+            notify "Successfully symlinked: ${l_name}"
+        else
+            echo "Failed to symlink: '${l_name}'"
+            critical_notify "Failed to symlink: ${l_name}"
 
-	if [[ -d "$codir" ]]; then
-		notify "Updating... $coname"
-		cd "$codir"
-		git pull "$coorigin" "$comain"
-	else
-		missing "$coname"
-	fi
+            exit 1
+        fi
+    fi
 done
 
-cd ~
+cd "$HOME/.config/hypr"
+if git pull origin main; then
+    echo "Successfully updated rice!"
+    notify "Successfully updated rice!"
+else
+    echo "Failed to update rice!"
+    critical_notify "Failed to update rice!"
 
-if [[ ${#missing_array} != 0 ]]; then
-	echo ""
+    cd "$HOME"
+
+    exit 1
 fi
 
-for i in "${missing_array[@]}"
-do
-	if [[ $i != "" ]]; then
-		if [[ $i != " " ]]; then
-			echo -e "\033[1;30m[\033[1;36mMissing\033[1;30m]\033[0m \033[0;31mYou are missing config files for $i.\033[0m"
-			critical_notify "No config for $i!"
-		fi
-	fi
-done
-
-notify "Done! :-D"
+cd "$HOME"

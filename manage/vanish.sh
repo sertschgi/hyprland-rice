@@ -2,34 +2,25 @@
 
 # Your dad left with the milk, btw.
 
-configs=(
-    "Hyprland" "$HOME/.config/hypr"
-    "Alacritty" "$HOME/.config/alacritty"
-    "Kitty" "$HOME/.config/kitty"
-    "Rofi" "$HOME/.config/rofi"
-)
+source "$HOME/.config/hypr/lib.sh"
 
-for u in $(seq 0 $((${#configs[@]} / 1))); do
-    coname=""
-    codir=""
+for i in ${symlinks[@]}; do
+    l_name="$(echo "$i" | cut -f1 -d ':')"
+    link_path="$(echo "$i" | cut -f2 -d ':')"
 
-    for i in $(seq 0 1); do
-        cfgsv=${configs[$(($((u * 2)) + $i))]}
+    if unlink "${link_path}"; then
+        echo "Unlinked: '${l_name}'"
+    else
+        echo "Failed to unlink: '${l_name}'"
 
-        if [[ $i == 0 ]]; then
-			coname="$cfgsv"
-        elif [[ $i == 1 ]]; then
-            codir="$cfgsv"
-        fi
-    done
-
-    if [[ $coname != "" ]]; then
-        if [[ -f "$codir/.hyprland_rice" ]]; then
-            echo "Removing configurations for ${coname}..."
-            rm -rf "$codir"
-        fi
+        exit 1
     fi
 done
 
-echo " "
-echo "Done!"
+if rm -rf "$HOME/.config/hypr"; then
+    echo "Successfully removed rice!"
+else
+    echo "Failed to remove rice!"
+
+    exit 1
+fi
