@@ -9,10 +9,10 @@ template_files=(
   "eww.scss : $HOME/.config/hypr/eww/eww.scss : scss"
   "waybar.css : $HOME/.config/hypr/waybar/style.css : css"
   "swaync.css : $HOME/.config/hypr/swaync/style.css : css"
-  "alacritty.toml : $HOME/.config/alacritty/alacritty.toml : toml"
-  "rofi.rasi : $HOME/.config/rofi/themes/generated.rasi : rasi"
-  "rofi_config.rasi : $HOME/.config/rofi/config.rasi : rasi"
-  "kitty.conf : $HOME/.config/kitty/kitty.conf : generic"
+  "alacritty.toml : $HOME/.config/hypr/symlinks/alacritty/alacritty.toml : toml"
+  "rofi.rasi : $HOME/.config/hypr/symlinks/rofi/themes/generated.rasi : rasi"
+  "rofi_config.rasi : $HOME/.config/hypr/symlinks/rofi/config.rasi : rasi"
+  "kitty.conf : $HOME/.config/hypr/symlinks/kitty/kitty.conf : generic"
 )
 
 theme_path () {
