@@ -8,6 +8,8 @@ source ~/.config/hypr/lib.sh
 
 run_hook pre &
 
+~/.config/hypr/manage/symlink.sh
+
 [[ -d ~/.hyprland_rice ]] || mkdir ~/.hyprland_rice
 [[ -d ~/.cache/hyprland_rice ]] || mkdir ~/.cache/hyprland_rice
 

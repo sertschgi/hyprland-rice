@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-source "$HOME/.config/hypr/lib.sh"
+############################ IMPORTANT ############################
+# Common mistake: do not source any files! (They do not exist...) #
+###################################################################
 
 abort_on_existing () {
     fail_msg="Found existing file/directory, aborting... ($1)"
@@ -25,12 +27,6 @@ verify_dir () {
 # Verify availability for configuration.
 abort_on_existing "$HOME/.config/hypr"
 
-for i in ${symlinks[@]}; do
-    check_path="$(echo "$i" | cut -f2 -d ':')"
-
-    abort_on_existing "$check_path"
-done
-
 verify_dir "$HOME/.config"
 cd "$HOME/.config"
 if git clone https://gitlab.com/Oglo12/hyprland-rice.git hypr; then
@@ -40,24 +36,6 @@ else
 
     exit 1
 fi
-
-cd "$HOME"
-
-for i in ${symlinks[@]}; do
-    l_name="$(echo "$i" | cut -f1 -d ':')"
-    real_path="$HOME/.config/hypr/symlinks/${l_name}"
-    symlink_path="$(echo "$i" | cut -f2 -d ':')"
-
-    echo "Symlinking '${l_name}' to: '${symlink_path}'"
-
-    if ln -s "$real_path" "$symlink_path"; then
-        echo "Successfully symlinked: '${l_name}'"
-    else
-        echo "Failed to symlink: '${l_name}'"
-
-        exit 1
-    fi
-done
 
 cd "$HOME"
 
