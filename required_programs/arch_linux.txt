@@ -26,7 +26,7 @@ xcursor-simp1e-gruvbox-light
 hyprlock
 hypridle
 qt5-wayland
-eww-wayland
+eww
 git
 xdg-desktop-portal
 xdg-desktop-portal-gtk
