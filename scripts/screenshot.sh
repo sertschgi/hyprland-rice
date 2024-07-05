@@ -5,6 +5,10 @@ notify_name="Screenshot Utility"
 tmp_path="/tmp/hyprland_rice_screenshot_tool"
 shot_path="$tmp_path/screenshot.png"
 
+theme_id_for_cover_color="window-border"
+cover_color_opacity_hex="40"
+cover_color="$(cat $HOME/.cache/hyprland_rice/theme/theme.txt | grep "\$$theme_id_for_cover_color " | awk -F ' -> ' '{ print $2 }' | sed 's/#//' | sed 's/;//')${cover_color_opacity_hex}"
+
 notify_critical () {
     notify-send -u critical "$notify_name" "$1"
 }
@@ -36,7 +40,7 @@ done
 [[ -d "$tmp_path" ]] || mkdir -p "$tmp_path" || die "Failed to create: '${tmp_path}'"
 
 get_area () {
-    slurp -c "#00000000"
+    slurp -c "#00000000" -b "$cover_color"
 }
 
 copy_to_clipboard () {
