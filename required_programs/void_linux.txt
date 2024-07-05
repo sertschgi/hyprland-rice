@@ -17,7 +17,6 @@ blueman
 papirus-icon-theme
 noto-fonts-emoji
 lxsession
-grimblast # PENDING NIX
 brightnessctl
 light
 nwg-look

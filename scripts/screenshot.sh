@@ -1,9 +1,99 @@
 #!/usr/bin/env bash
 
+notify_name="Screenshot Utility"
+
+tmp_path="/tmp/hyprland_rice_screenshot_tool"
+shot_path="$tmp_path/screenshot.png"
+
+notify_critical () {
+    notify-send -u critical "$notify_name" "$1"
+}
+
+notify_normal () {
+    notify-send "$notify_name" "$1"
+}
+
+die () {
+    echo "$1    (T~T)" >&2
+    notify_critical "$1"
+    exit 1
+}
+
+cmd_depends=(
+    "grim"
+    "slurp"
+    "wl-copy"
+)
+
+for i in ${cmd_depends[@]}; do
+    if command -v $i > /dev/null 2>&1; then
+        echo "$i - OK"
+    else
+        die "Command '$i' not found!"
+    fi
+done
+
+[[ -d "$tmp_path" ]] || mkdir -p "$tmp_path" || die "Failed to create: '${tmp_path}'"
+
+get_area () {
+    slurp -c "#00000000"
+}
+
+copy_to_clipboard () {
+    cat "$shot_path" | wl-copy --type image/png
+}
+
+abort_screenshot () {
+    notify_normal "Screenshot aborted!"
+    exit 1
+}
+
+take_screenshot () {
+    if [[ -f "$shot_path" ]]; then
+        echo "Removing old temporary screenshot... '$shot_path'"
+        rm "$shot_path" || die "Unable to remove old temporary screenshot!"
+    fi
+
+    pre_pre_cmd=""
+    pre_cmd=""
+    grim_cmd='grim -t png <EXTRA> "$shot_path"'
+
+    if [[ "$1" == "area" ]]; then
+        pre_pre_cmd='export SHOT_AREA="$(get_area)" && echo "Screenshot Area: $SHOT_AREA"'
+        pre_cmd='[[ "$SHOT_AREA" == "" ]] && abort_screenshot || export SHOT_AREA="$SHOT_AREA"'
+        grim_cmd="$(echo "$grim_cmd" | sed 's/<EXTRA>/-g "$SHOT_AREA"/g')"
+    elif [[ "$1" == "output" ]]; then
+        grim_cmd="$(echo "$grim_cmd" | sed 's/<EXTRA>//g')"
+    else
+        die "Invalid argument passed to take_screenshot()!"
+    fi
+
+    echo "Taking screenshot..."
+    eval "$pre_pre_cmd" || die "Failed to run pre-pre-screenshot commands!"
+    eval "$pre_cmd" || die "Failed to run pre-screenshot commands!"
+    eval "$grim_cmd" || die "Failed to take screenshot!"
+}
+
+take_screenshot_area () {
+    take_screenshot "area"
+    copy_to_clipboard
+}
+
+take_screenshot_output () {
+    take_screenshot "output"
+    copy_to_clipboard
+}
+
 if [[ "$1" == "area" ]]; then
-  grimblast copy area --cursor || notify-send "Hyprland" "Screenshot aborted."
+    take_screenshot_area
 elif [[ "$1" == "output" ]]; then
-  grimblast copy output --cursor && notify-send "Hyprland" "Screenshot taken."
+    take_screenshot_output && notify_normal "Screenshot taken!"
+else
+    die "Invalid argument!"
 fi
 
-hyprctl reload
+echo "Removing temporary screenshot..."
+rm "$shot_path" || die "Unable to remove temporary screenshot!"
+
+echo "Reloading Hyprland..."
+hyprctl reload || die "Failed to reload Hyprland!"

@@ -1,5 +1,4 @@
 gui-wm/hyprland
-gui-wm/hyprland-contrib
 app-misc/cliphist
 gui-apps/waybar
 x11-terms/alacritty
