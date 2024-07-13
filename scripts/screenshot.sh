@@ -66,7 +66,10 @@ take_screenshot () {
         pre_pre_cmd='export SHOT_AREA="$(get_area)" && echo "Screenshot Area: $SHOT_AREA"'
         pre_cmd='[[ "$SHOT_AREA" == "" ]] && abort_screenshot || export SHOT_AREA="$SHOT_AREA"'
         grim_cmd="$(echo "$grim_cmd" | sed 's/<EXTRA>/-g "$SHOT_AREA"/g')"
-    elif [[ "$1" == "output" ]]; then
+    elif [[ "$1" == "monitor" ]]; then
+        export FOCUSED_MONITOR="$(hyprctl activeworkspace | grep "workspace ID" | tr ' ' '\n' | tail --lines 1 | sed 's/:$//')"
+        grim_cmd="$(echo "$grim_cmd" | sed 's/<EXTRA>/-o "$FOCUSED_MONITOR"/g')"
+    elif [[ "$1" == "all" ]]; then
         grim_cmd="$(echo "$grim_cmd" | sed 's/<EXTRA>//g')"
     else
         die "Invalid argument passed to take_screenshot()!"
@@ -83,15 +86,22 @@ take_screenshot_area () {
     copy_to_clipboard
 }
 
-take_screenshot_output () {
-    take_screenshot "output"
+take_screenshot_monitor () {
+    take_screenshot "monitor"
+    copy_to_clipboard
+}
+
+take_screenshot_all () {
+    take_screenshot "all"
     copy_to_clipboard
 }
 
 if [[ "$1" == "area" ]]; then
     take_screenshot_area
-elif [[ "$1" == "output" ]]; then
-    take_screenshot_output && notify_normal "Screenshot taken!"
+elif [[ "$1" == "monitor" ]]; then
+    take_screenshot_monitor && notify_normal "Screenshot taken! (Focused Monitor)"
+elif [[ "$1" == "all" ]]; then
+    take_screenshot_all && notify_normal "Screenshot taken! (All Monitors)"
 else
     die "Invalid argument!"
 fi
