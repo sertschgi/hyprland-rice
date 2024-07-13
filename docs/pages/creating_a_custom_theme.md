@@ -28,6 +28,7 @@ $Some Theme Somewhere Strange On The System -> /usr/share/my_rice_themes/my_them
 
 
 # Speeding Up The Theme Switcher
+
 By default, the rice will use a very slow Bash script to generate the final files for the rice. This can take a few seconds.
 If you want to speed up the switching times dramatically, you can install this Rust program: https://gitlab.com/Oglo12/oglo-hyprland-rice-theme-translate-rs
 
