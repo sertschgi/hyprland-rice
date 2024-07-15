@@ -122,7 +122,8 @@ elif [[ "$1" == "monitor" ]]; then
 elif [[ "$1" == "all" ]]; then
     take_screenshot_all && notify_normal "Screenshot taken! (All Monitors)"
 else
-    die "Invalid argument!"
+    echo -e "\nAll Possible Options: 'area', 'monitor', 'all'" >&2
+    die "Invalid argument! ($1)"
 fi
 
 echo "Removing temporary screenshot..."
