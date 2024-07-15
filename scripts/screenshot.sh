@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 
+# Hyprland Screenshot Utility Script
+#
+# This script is made for OgloTheNerd's Hyprland rice (https://gitlab.com/Oglo12/hyprland-rice),
+# but this script can also work on any Hyprland rice.
+# The only requirements needed to use this script are the following commands:
+# - grim
+# - slurp
+# - wl-copy
+
 notify_name="Screenshot Utility"
 
 tmp_path="/tmp/hyprland_rice_screenshot_tool"
@@ -7,7 +16,7 @@ shot_path="$tmp_path/screenshot.png"
 
 theme_id_for_cover_color="window-border"
 cover_color_opacity_hex="50"
-cover_color="$(cat $HOME/.cache/hyprland_rice/theme/theme.txt | grep "\$$theme_id_for_cover_color " | awk -F ' -> ' '{ print $2 }' | sed 's/#//' | sed 's/;//')${cover_color_opacity_hex}"
+cover_color="#ffffff${cover_color_opacity_hex}" # This gets changed if this is OgloTheNerd's rice.
 
 notify_critical () {
     notify-send -u critical "$notify_name" "$1"
@@ -38,6 +47,16 @@ for i in ${cmd_depends[@]}; do
 done
 
 [[ -d "$tmp_path" ]] || mkdir -p "$tmp_path" || die "Failed to create: '${tmp_path}'"
+
+if [[ -f $HOME/.cache/hyprland_rice/theme/theme.txt ]]; then
+    export IS_OGLO_RICE="yes"
+else
+    export IS_OGLO_RICE="no"
+fi
+
+if [[ "$IS_OGLO_RICE" == "yes" ]]; then
+    cover_color="$(cat $HOME/.cache/hyprland_rice/theme/theme.txt | grep "\$$theme_id_for_cover_color " | awk -F ' -> ' '{ print $2 }' | sed 's/#//' | sed 's/;//')${cover_color_opacity_hex}"
+fi
 
 get_area () {
     slurp -c "#00000000" -b "$cover_color"
