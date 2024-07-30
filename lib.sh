@@ -11,6 +11,7 @@ set_wallpaper () {
 }
 
 run_hook () {
+    chmod +x "$HOME/.hyprland_rice/autostart_$1"
 	$HOME/.hyprland_rice/autostart_$1
 }
 

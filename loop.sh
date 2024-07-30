@@ -22,6 +22,9 @@ while [[ 1 == 1 ]]; do
     pkill -n waybar
   fi
 
+  chmod +x ~/.hyprland_rice/loop
+  ~/.hyprland_rice/loop
+
   # Reset and sleep.
   cd ~
   sleep 1
