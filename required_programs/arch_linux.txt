@@ -17,7 +17,7 @@ noto-fonts-emoji
 lxsession
 brightnessctl
 light
-nwg-look-bin
+nwg-look
 yad
 sox
 mint-themes
