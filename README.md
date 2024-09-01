@@ -1,7 +1,5 @@
 # My Personal Hyprland Rice
 
-> NOTE: If you are installing on Void Linux, you will need to add this software repository: https://gitlab.com/Oglo12/oglo-void-repo
-
 > NOTE: If you are installing on Gentoo Linux, you will need the [GURU](https://wiki.gentoo.org/wiki/Project:GURU) software repository enabled.
 
 > How to Install:

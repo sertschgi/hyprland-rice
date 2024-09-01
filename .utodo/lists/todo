@@ -1,0 +1,14 @@
+utodo = [
+    2,
+    0,
+    1,
+]
+
+[pending]
+items = ["USE flags for Gentoo required programs."]
+
+[progress]
+items = []
+
+[finished]
+items = []

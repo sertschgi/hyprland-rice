@@ -24,6 +24,7 @@ gnome-extra/yad
 media-sound/sox
 gui-apps/hyprlock
 gui-apps/hypridle
+gui-apps/hyprpicker
 gui-apps/eww
 dev-vcs/git
 sys-apps/xdg-desktop-portal

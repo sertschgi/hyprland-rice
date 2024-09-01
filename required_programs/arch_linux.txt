@@ -24,6 +24,7 @@ mint-themes
 xcursor-simp1e-gruvbox-light
 hyprlock
 hypridle
+hyprpicker
 qt5-wayland
 eww
 git
