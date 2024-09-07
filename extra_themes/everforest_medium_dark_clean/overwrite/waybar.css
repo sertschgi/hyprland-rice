@@ -5,7 +5,7 @@
 }
 
 window#waybar {
-    background-color: transparent;
+    background-color: @--rgba-background-o0--;
     color: @--foreground--;
     transition-property: background-color;
     transition-duration: .5s;
@@ -29,8 +29,8 @@ button {
     background-color: @--button--;
     color: @--button-foreground--;
     border: none;
-    border-radius: 10px;
-    margin-left: 4px;
+    border-radius: 100px;
+    margin-left: 6px;
     margin-top: 4px;
     margin-bottom: 4px;
     font-family: JetBrainsMono Nerd Font, sans-sherif;
@@ -38,8 +38,8 @@ button {
     font-size: 14px;
     padding-left: 17px;
     padding-right: 17px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 6px;
+    padding-bottom: 6px;
     transition: transform 0.1s ease-in-out;
 }
 
@@ -82,7 +82,7 @@ button.active {
 
 #window,
 #workspaces {
-    margin: 0 4px;
+    margin: 0 15px;
 }
 
 /* If workspaces is the leftmost module, omit left margin */
@@ -96,13 +96,13 @@ button.active {
 }
 
 #window {
-    background-color: @--terminal-blue--;
-    color: @--background--;
+    background-color: @--rgba-background-o1--;
+    color: @--foreground--;
     font-family: JetBrainsMono Nerd Font, monospace;
     font-size: 15px;
     font-weight: bold;
     border: none;
-    border-radius: 10px;
+    border-radius: 100px;
     padding-left: 17px;
     padding-right: 17px;
     margin-top: 4px;
@@ -116,7 +116,7 @@ button.active {
     font-size: 18px;
     font-weight: bold;
     border: none;
-    border-radius: 10px;
+    border-radius: 100px;
     margin-top: 4px;
     margin-bottom: 4px;
     padding-left: 13px;
@@ -130,7 +130,7 @@ button.active {
     font-size: 18px;
     font-weight: bold;
     border: none;
-    border-radius: 10px;
+    border-radius: 100px;
     margin-top: 4px;
     margin-bottom: 4px;
     padding-left: 14px;
@@ -144,10 +144,10 @@ button.active {
     font-size: 22px;
     font-weight: bold;
     border: none;
-    border-radius: 10px;
+    border-radius: 100px;
     margin-top: 4px;
     margin-bottom: 4px;
-    margin-right: 4px;
+    margin-right: 6px;
     padding-left: 14px;
     padding-right: 7px;
 }
@@ -159,7 +159,7 @@ button.active {
     font-size: 15px;
     font-weight: bold;
     border: none;
-    border-radius: 10px;
+    border-radius: 100px;
     margin-top: 4px;
     margin-bottom: 4px;
 }
@@ -171,7 +171,7 @@ button.active {
     font-size: 15px;
     font-weight: bold;
     border: none;
-    border-radius: 10px;
+    border-radius: 100px;
     margin-top: 4px;
     margin-bottom: 4px;
 }
@@ -190,7 +190,7 @@ button.active {
     font-size: 15px;
     font-weight: bold;
     border: none;
-    border-radius: 10px;
+    border-radius: 100px;
     margin-top: 4px;
     margin-bottom: 4px;
 }
@@ -206,7 +206,7 @@ label:focus {
     font-size: 15px;
     font-weight: bold;
     border: none;
-    border-radius: 10px;
+    border-radius: 100px;
     margin-top: 4px;
     margin-bottom: 4px;
 }
@@ -218,7 +218,7 @@ label:focus {
     font-size: 15px;
     font-weight: bold;
     border: none;
-    border-radius: 10px;
+    border-radius: 100px;
     margin-top: 4px;
     margin-bottom: 4px;
 }
@@ -234,7 +234,7 @@ label:focus {
     font-size: 15px;
     font-weight: bold;
     border: none;
-    border-radius: 10px;
+    border-radius: 100px;
     margin-top: 4px;
     margin-bottom: 4px;
 }
@@ -254,7 +254,7 @@ label:focus {
     font-size: 15px;
     font-weight: bold;
     border: none;
-    border-radius: 10px;
+    border-radius: 100px;
     margin-top: 4px;
     margin-bottom: 4px;
 }
@@ -304,7 +304,7 @@ label:focus {
     font-size: 15px;
     font-weight: bold;
     border: none;
-    border-radius: 10px;
+    border-radius: 100px;
     margin-top: 4px;
     margin-bottom: 4px;
 }
@@ -377,9 +377,9 @@ label:focus {
 }
 
 tooltip {
-  background-color: @--terminal-blue--;
+  background-color: @--background--;
   border: none;
-  border-radius: 5px;
+  border-radius: 100px;
 }
 
 tooltip decoration {
@@ -391,7 +391,7 @@ tooltip decoration:backdrop {
 }
 
 tooltip label {
-  color: @--background--;
+  color: @--foreground--;
   font-family: JetBrainsMono Nerd Font, monospace;
   font-size: 16px;
   padding-left: 5px;
