@@ -96,7 +96,7 @@ button.active {
 }
 
 #window {
-    background-color: @--background--;
+    background-color: @--background3--;
     color: @--foreground--;
     font-family: JetBrainsMono Nerd Font, monospace;
     font-size: 15px;
