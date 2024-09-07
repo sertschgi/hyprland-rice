@@ -9,11 +9,11 @@
     tab-selected: ${--background--};
     fg-col: ${--foreground--};
     fg-col2: ${--background--};
-    blank: ${--background--}c0;
+    blank: ${--background--};
     blank-underline: ${--background2-bottom--};
     button: ${--button--};
     button-underline: ${--button-bottom--};
-    window: ${--background--}a0;
+    window: ${--background--}ba;
     window-underline: ${--background3-bottom--};
 
     width: 600;
