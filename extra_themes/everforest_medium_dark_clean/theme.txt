@@ -1,5 +1,4 @@
 $rgba-background-o0 -> rgba(35, 42, 46, 0.7);
-$rgba-background-o1 -> rgba(35, 42, 46, 0.9);
 $foreground -> #d3c6aa;
 $foreground-disabled -> #2d353b;
 $background -> #232a2e;
