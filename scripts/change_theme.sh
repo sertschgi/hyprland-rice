@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+notify_name="Theme Chooser"
+
+cache_theme_path="$HOME/.cache/hyprland_rice/theme"
+cache_theme_list_path="$HOME/.cache/hyprland_rice/theme_list.txt"
+
 #while IFS= read -r i; do
 #  echo "$i"
 #done < $HOME/.hyprland_rice/themes.txt
@@ -9,16 +14,16 @@ rm ~/.cache/hyprland_rice/theme_list.txt > /dev/null 2>&1
 if [[ "$1" == "" ]]; then
   theme_categ=$(echo -e "All\nBuilt-In\nExtra Built-In\nCustom" | rofi -dmenu -p " 󰉼  Categories ")
   
-  echo "Chosen Category: $theme_categ"
+  echo "Chosen Category: '${theme_categ}'"
   
   if [[ $theme_categ == "All" ]]; then
-    cat $HOME/.config/hypr/themes/themes.txt $HOME/.config/hypr/extra_themes/themes.txt $HOME/.hyprland_rice/themes.txt > $HOME/.cache/hyprland_rice/theme_list.txt
+    cat $HOME/.config/hypr/themes/themes.txt $HOME/.config/hypr/extra_themes/themes.txt $HOME/.hyprland_rice/themes.txt > $cache_theme_list_path
   elif [[ $theme_categ == "Built-In" ]]; then
-    cat $HOME/.config/hypr/themes/themes.txt > $HOME/.cache/hyprland_rice/theme_list.txt
+    cat $HOME/.config/hypr/themes/themes.txt > $cache_theme_list_path
   elif [[ $theme_categ == "Extra Built-In" ]]; then
-    cat $HOME/.config/hypr/extra_themes/themes.txt > $HOME/.cache/hyprland_rice/theme_list.txt
+    cat $HOME/.config/hypr/extra_themes/themes.txt > $cache_theme_list_path
   elif [[ $theme_categ == "Custom" ]]; then
-    cat $HOME/.hyprland_rice/themes.txt > $HOME/.cache/hyprland_rice/theme_list.txt
+    cat $HOME/.hyprland_rice/themes.txt > $cache_theme_list_path
   else
     echo "Invalid category."
     exit 1
@@ -26,25 +31,52 @@ if [[ "$1" == "" ]]; then
 fi
 
 key_to_value () {
-  cat $HOME/.cache/hyprland_rice/theme_list.txt | grep "\$$1 ->" | sed 's/\$//g' | sed 's/ -> /\$/g' | cut -f2 -d "\$" | sed 's/;//g'
+  cat "$1" | grep "\$$2 ->" | sed 's/\$//g' | sed 's/ -> /\$/g' | cut -f2 -d "\$" | sed 's/;//g'
 }
 
 theme_path=""
 
 if [[ "$1" == "" ]]; then
-  chosen_theme="$(cat $HOME/.cache/hyprland_rice/theme_list.txt | sed 's/\$//g' | sed 's/ -> /\$/g' | cut -f1 -d "\$" | rofi -dmenu -p " 󰉼  Themes ")"
+  chosen_theme="$(cat $cache_theme_list_path | sed 's/\$//g' | sed 's/ -> /\$/g' | cut -f1 -d "\$" | rofi -dmenu -p " 󰉼  Themes ")"
   
-  theme_path=$(key_to_value "$chosen_theme")
-  theme_path=$(eval "echo $theme_path")
+  theme_path="$(key_to_value "$cache_theme_list_path" "$chosen_theme")"
+  theme_path="$(eval "echo $theme_path")"
 else
   theme_path="$1"
 fi
 
-notify-send "Theme Chooser" "Setting theme... please wait..."
+notify-send "$notify_name" "Setting theme... please wait..."
 
 rm -rf ~/.cache/hyprland_rice/theme > /dev/null 2>&1
 
-cp -r "$theme_path" "$HOME/.cache/hyprland_rice/theme"
+cp -r "$theme_path" "$cache_theme_path"
+
+echo \
+"Once the theme is copied into this cache theme,
+the cache theme may get modified post-copy." \
+> "$cache_theme_path/DISCLAIMER.txt"
+
+if [[ -f "$cache_theme_path/wallpaper.png" ]]; then
+    echo "Using wallpaper provided at theme root..."
+else
+    if [[ -f "$cache_theme_path/wallpapers/list.txt" ]]; then
+        wallpapers_list_path="$cache_theme_path/wallpapers/list.txt"
+
+        chosen_wallpaper="$(cat "$wallpapers_list_path" | sed 's/\$//g' | awk -F ' -> ' '{ print $1 }' | rofi -dmenu -p " 󰲍  Wallpapers")"
+
+        wallpaper_path="$cache_theme_path/wallpapers/$(key_to_value "$wallpapers_list_path" "$chosen_wallpaper").png"
+
+        echo "Chosen Wallpaper: '${chosen_wallpaper}'"
+
+        if [[ -f "$wallpaper_path" ]]; then
+            cp "$wallpaper_path" "$cache_theme_path/wallpaper.png" || notify-send -u critical "$notify_name" "Failed to copy over wallpaper!"
+        else
+            notify-send -u critical "$notify_name" "The given wallpaper value once expanded into a file path does not exist at that path! Expanded path: '${wallpaper_path}'"
+        fi
+    else
+        echo "Failed to find valid wallpaper!"
+    fi
+fi
 
 rm ~/.cache/hyprland_rice/theme_path.txt > /dev/null 2>&1
 echo "$theme_path" > ~/.cache/hyprland_rice/theme_path.txt
@@ -60,4 +92,4 @@ fi
 ~/.config/hypr/manage/refresh_theme.sh
 ~/.config/hypr/scripts/refresh_after_theme_change.sh
 
-notify-send "Theme Chooser" "Set theme! Enjoy! <3"
+notify-send "$notify_name" "Set theme! Enjoy! <3"

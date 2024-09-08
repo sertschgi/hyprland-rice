@@ -37,7 +37,7 @@ if [[ -f ~/.cache/hyprland_rice/theme_refresh_id.txt ]]; then
 else
   theme_path="$HOME/.config/hypr/themes/gruvbox_dark"
 
-  [[ $theme_refresh_id == $theme_refresh_id_old ]] || ~/.config/hypr/scripts/change_theme.sh "$theme_path"
+  ~/.config/hypr/scripts/change_theme.sh "$theme_path"
 fi
 
 swww kill
