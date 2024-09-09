@@ -62,7 +62,7 @@ else
     if [[ -f "$cache_theme_path/wallpapers/list.txt" ]]; then
         wallpapers_list_path="$cache_theme_path/wallpapers/list.txt"
 
-        chosen_wallpaper="$(cat "$wallpapers_list_path" | sed 's/\$//g' | awk -F ' -> ' '{ print $1 }' | rofi -dmenu -p " 󰲍  Wallpapers")"
+        chosen_wallpaper="$(cat "$wallpapers_list_path" | sed 's/\$//g' | awk -F ' -> ' '{ print $1 }' | rofi -dmenu -p " 󰲍  Wallpapers ")"
 
         wallpaper_path="$cache_theme_path/wallpapers/$(key_to_value "$wallpapers_list_path" "$chosen_wallpaper").png"
 
