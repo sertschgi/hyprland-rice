@@ -84,9 +84,9 @@ translate_file () {
 }
 
 translate_file_fast () {
-  echo "Template: '$1' (FAST)"
+  echo "Template: '$2' (FAST)"
 
-  oglo-hyprland-rice-theme-translate-rs --template $1 --generated $2 --language $3 --theme-txt $(theme_path)/theme.txt
+  "$1" --template $2 --generated $3 --language $4 --theme-txt $(theme_path)/theme.txt
 }
 
 tf_call () {
@@ -97,7 +97,9 @@ tf_call () {
   fi
 
   if command -v oglo-hyprland-rice-theme-translate-rs > /dev/null 2>&1; then
-    translate_file_fast $template_file $2 $3
+    translate_file_fast oglo-hyprland-rice-theme-translate-rs $template_file $2 $3
+  elif [[ -f "$HOME/.cargo/bin/oglo-hyprland-rice-theme-translate-rs" ]]; then
+    translate_file_fast "$HOME/.cargo/bin/oglo-hyprland-rice-theme-translate-rs" $template_file $2 $3
   else
     translate_file $template_file $2 $3
   fi
