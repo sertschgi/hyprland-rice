@@ -58,6 +58,7 @@ button.active {
     border-bottom: 3px solid #ffffff;
 }
 
+#custom-scripted_clock,
 #clock,
 #battery,
 #cpu,
@@ -152,6 +153,7 @@ button.active {
     padding-right: 7px;
 }
 
+#custom-scripted_clock,
 #clock {
     background-color: @--waybar-clock--;
     color: @--waybar-module-foreground--;
