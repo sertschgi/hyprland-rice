@@ -98,6 +98,7 @@
         "interval": 10,
         "on-click": "$HOME/.config/hypr/waybar/scripts/clock_json.sh click-left",
         "on-click-right": "$HOME/.config/hypr/waybar/scripts/clock_json.sh click-right",
+        "on-click-middle": "$HOME/.config/hypr/waybar/scripts/clock_json.sh click-middle",
         "exec": "$HOME/.config/hypr/waybar/scripts/clock_json.sh"
     },
     "cpu": {
