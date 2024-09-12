@@ -18,6 +18,7 @@
 	"format": " ",
 	"on-click": "~/.config/hypr/swaync/scripts/tray_waybar.sh",
     "on-click-right": "swaync-client -C",
+    "on-click-middle": "~/.config/hypr/swaync/scripts/notify_count.sh",
 	"tooltip": false,
     },
     "custom/menu": {
