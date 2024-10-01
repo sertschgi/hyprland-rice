@@ -12,6 +12,24 @@ time_24h="$(date '+%H:%M')"
 time_12h="$(date '+%I:%M %p')"
 time_date="$(date '+%A, %B %d, %Y')"
 
+# Fix the 12 hour time if AM/PM isn't found... (I have a friend from Austria who has issues with this.)
+if echo "$time_12h" | grep -iE 'AM|PM' > /dev/null 2>&1; then
+    : # Do nothing.
+else
+    trimmed_display="$(echo "$time_12h" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')"
+
+    minute_segment="$(echo "$time_24h" | cut -f2 -d ':')"
+    hour_segment="$(echo "$time_24h" | cut -f1 -d ':')"
+    am_pm="AM"
+
+    if [[ "$hour_segment" -gt 12 ]]; then
+        am_pm="PM"
+        hour_segment=$(( ${hour_segment} - 12 ))
+    fi
+
+    time_12h="${hour_segment}:${minute_segment} ${am_pm}"
+fi
+
 hit_a_click=1
 
 if [[ "$1" == "click-middle" ]]; then
