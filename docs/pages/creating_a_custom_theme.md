@@ -6,7 +6,7 @@ I made it so you can! :)
 Here are the steps:
 
 1. Create a directory somewhere on your system. (Example: `~/.hyprland_rice/my_theme`, but this can be anywhere on the system!)
-2. Enter that directory.
+2. Enter (`cd` command) into that directory.
 3. Save a wallpaper in the PNG (`.png`) format to `wallpaper.png`.
 4. Create a text file called `theme.txt`. (Or copy one of the default ones, such as: `~/.config/hypr/themes/gruvbox_dark/theme.txt`)
 5. Next, you want to make sure you have all the fields required in `theme.txt`. A field being `$KEY -> VALUE;`. (If you copied one of the default files, just edit the fields.)
@@ -37,6 +37,60 @@ If you are on Arch Linux, you can install this as a package called `oglo-hyprlan
 Once you have done that, the theming script will automatically detect this binary, and use it! (It will hopefully take less than a second now!)
 
 If it doesn't work, it is possible that you didn't install the binary to somewhere on the system that is in the `$PATH`.
+
+
+
+# Many Wallpapers For One Theme (Animated Wallpapers Too)
+
+When you specify a wallpaper via just the `wallpaper.png` method, there are some limitations:
+
+- You cannot specify more than 1 wallpaper per theme.
+- You must use a PNG file. (Perhaps this will change in the future.)
+- You cannot specify custom parameters for the wallpaper like the filter.
+(You may want to specify the filter as `Nearest` if you are using pixel art.)
+
+The first step to specify many wallpapers to choose from for one theme is to make
+sure you don't have a `wallpaper.png` already in the theme directory.
+
+After you have dealt with the `wallpaper.png` file, you can follow these steps:
+
+1. Create a directory in your theme directory called: `wallpapers`
+2. Next, create a file in that new directory called: `list.txt` (`wallpapers/list.txt`)
+3. Put your wallpapers inside `wallpapers`. (Example: `mv ./wallpaper.png ./wallpapers/my_wallpaper.png`)
+4. Put information in `list.txt` regarding the name of the wallpaper and the file name:
+```
+$My Epic Wallpaper -> my_wallpaper;
+```
+5. If done correctly, you can now select a wallpaper after selecting your theme!
+
+### Animated Wallpaper (And Wallpapers With Other File Extensions)
+
+When putting information in `list.txt`, you can put a file extension on the end
+of the wallpaper file name to specify the extension. If an extension is not specified,
+PNG will be assumed:
+```
+$My Epic Wallpaper -> my_wallpaper;
+$My Epic Animated Wallpaper -> my_animated_wallpaper.gif;
+```
+
+### Setting Custom Parameters (Filter, Etc...)
+
+Some wallpapers (pixel art mainly) don't look good with the default filter.
+You may want to specify a filter such as "Nearest" for those sharp pixels.
+
+To do so, you have to create an additional `.txt` file to go with your wallpaper.
+If you didn't specify a wallpaper extension, you should assume `.png`.
+
+Here are some examples of what you would call the file in different senarios:
+
+- `my_wallpaper` = `my_wallpaper.png.txt` (Remember, assume `.png`.)
+- `my_wallpaper.png` = `my_wallpaper.png.txt`
+- `my_wallpaper.gif` = `my_wallpaper.gif.txt`
+
+Great, now to specify the filter (for example, "Nearest"), you put this in the file:
+```
+$filter -> Nearest;
+```
 
 
 
