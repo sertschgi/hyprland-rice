@@ -23,10 +23,13 @@
   1. Open a terminal.
   2. Make sure Git is installed.
   3. Run this command:
-     ```
-     update-rice
-     ```
-     If that fails, try this command:
-     ```
-     ~/.config/hypr/manage/update.sh
-     ```
+  ```
+  update-rice
+  ```
+  If that fails, try this command:
+  ```
+  ~/.config/hypr/manage/update.sh
+  ```
+
+> Art Credits:
+  - Mini Moss - https://mini-moss.tumblr.com/
