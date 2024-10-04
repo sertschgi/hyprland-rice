@@ -46,7 +46,7 @@ pkill swww
 
 swww-daemon -f xrgb &
 
-swww img ~/.cache/hyprland_rice/theme/wallpaper.png -t none
+set_wallpaper_themed none
 
 ~/.config/hypr/waybar/start
 ~/.config/hypr/swaync/start

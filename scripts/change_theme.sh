@@ -4,6 +4,7 @@ notify_name="Theme Chooser"
 
 cache_theme_path="$HOME/.cache/hyprland_rice/theme"
 cache_theme_list_path="$HOME/.cache/hyprland_rice/theme_list.txt"
+wallpaper_info_dir_path="${cache_theme_path}/wallpaper_info"
 
 #while IFS= read -r i; do
 #  echo "$i"
@@ -31,13 +32,13 @@ if [[ "$1" == "" ]]; then
 fi
 
 key_to_value () {
-  cat "$1" | grep "\$$2 ->" | sed 's/\$//g' | sed 's/ -> /\$/g' | cut -f2 -d "\$" | sed 's/;//g'
+  cat "$1" | grep "\$$2 ->" | sed 's/\$//g' | awk -F ' -> ' '{ print $2 }' | sed 's/;//g'
 }
 
 theme_path=""
 
 if [[ "$1" == "" ]]; then
-  chosen_theme="$(cat $cache_theme_list_path | sed 's/\$//g' | sed 's/ -> /\$/g' | cut -f1 -d "\$" | rofi -dmenu -p " 󰉼  Themes ")"
+  chosen_theme="$(cat $cache_theme_list_path | sed 's/\$//g' | awk -F ' -> ' '{ print $1 }' | rofi -dmenu -p " 󰉼  Themes ")"
   
   theme_path="$(key_to_value "$cache_theme_list_path" "$chosen_theme")"
   theme_path="$(eval "echo $theme_path")"
@@ -47,9 +48,9 @@ fi
 
 notify-send "$notify_name" "Setting theme... please wait..."
 
-rm -rf ~/.cache/hyprland_rice/theme > /dev/null 2>&1
-
+rm -rf "$cache_theme_path" > /dev/null 2>&1
 cp -r "$theme_path" "$cache_theme_path"
+mkdir -p "$wallpaper_info_dir_path"
 
 echo \
 "Once the theme is copied into this cache theme,
@@ -64,12 +65,32 @@ else
 
         chosen_wallpaper="$(cat "$wallpapers_list_path" | sed 's/\$//g' | awk -F ' -> ' '{ print $1 }' | rofi -dmenu -p " 󰲍  Wallpapers ")"
 
-        wallpaper_path="$cache_theme_path/wallpapers/$(key_to_value "$wallpapers_list_path" "$chosen_wallpaper").png"
+        wallpaper_extension="png"
+
+        chosen_value="$(key_to_value "$wallpapers_list_path" "$chosen_wallpaper")"
+
+        wallpapers_path="${cache_theme_path}/wallpapers"
+
+        found_extension="$(echo "$chosen_value" | awk -F '.' '{ print $2 }')"
+
+        [[ "$found_extension" == "" ]] || wallpaper_extension="$found_extension"
+        chosen_value="$(echo "$chosen_value" | awk -F '.' '{ print $1 }')" # Kind of a hack. :-\
+
+        echo "$wallpaper_extension" > "${cache_theme_path}/wallpaper_extension.txt"
+
+        echo "Wallpaper File Extension: '.${wallpaper_extension}'"
+
+        wallpaper_path="${cache_theme_path}/wallpapers/${chosen_value}.${wallpaper_extension}"
+        wallpaper_info_path="${wallpaper_path}.txt"
+
+        wallpaper_filter="$(key_to_value "$wallpaper_info_path" "filter")"
+
+        echo "$wallpaper_filter" > "${wallpaper_info_dir_path}/filter"
 
         echo "Chosen Wallpaper: '${chosen_wallpaper}'"
 
         if [[ -f "$wallpaper_path" ]]; then
-            cp "$wallpaper_path" "$cache_theme_path/wallpaper.png" || notify-send -u critical "$notify_name" "Failed to copy over wallpaper!"
+            cp "$wallpaper_path" "$cache_theme_path/wallpaper.${wallpaper_extension}" || notify-send -u critical "$notify_name" "Failed to copy over wallpaper!"
         else
             notify-send -u critical "$notify_name" "The given wallpaper value once expanded into a file path does not exist at that path! Expanded path: '${wallpaper_path}'"
         fi
