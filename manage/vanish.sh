@@ -24,3 +24,9 @@ else
 
     exit 1
 fi
+
+if [[ -d "$HOME/.cache/hyprland_rice" ]]; then
+    echo "Removing rice cache..."
+
+    rm -rf "$HOME/.cache/hyprland_rice" || exit 1
+fi
