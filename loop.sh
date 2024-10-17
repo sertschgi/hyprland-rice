@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+cd ~
+
+prev_custom_conf_sha512sum=""
+
 while [[ 1 == 1 ]]; do
   # Volume cap.
   if [[ -f ~/.hyprland_rice/disable_vol_cap ]]; then
@@ -24,6 +28,21 @@ while [[ 1 == 1 ]]; do
 
   chmod +x ~/.hyprland_rice/loop
   ~/.hyprland_rice/loop
+
+  [[ -f ~/.hyprland_rice/custom.conf ]] || cp ~/.config/hypr/custom_template.conf ~/.hyprland_rice/custom.conf
+
+  prev_custom_conf_check="$prev_custom_conf_sha512sum"
+  custom_conf_sha512sum="$(sha512sum ~/.hyprland_rice/custom.conf)"
+
+  [[ "$prev_custom_conf_sha512sum" == "" ]] && prev_custom_conf_check="$custom_conf_sha512sum"
+
+  if [[ "$prev_custom_conf_check" != "$custom_conf_sha512sum" ]]; then
+    notify-send "Reloading Hyprland..." "The custom configuration file has changed..."
+
+    hyprctl reload
+  fi
+
+  prev_custom_conf_sha512sum="$custom_conf_sha512sum"
 
   # Reset and sleep.
   cd ~
