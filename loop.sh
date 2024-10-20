@@ -26,8 +26,10 @@ while [[ 1 == 1 ]]; do
     pkill -n waybar
   fi
 
-  chmod +x ~/.hyprland_rice/loop
-  ~/.hyprland_rice/loop
+  if [[ -f ~/.hyprland_rice/loop ]]; then
+    chmod +x ~/.hyprland_rice/loop
+    ~/.hyprland_rice/loop
+  fi
 
   [[ -f ~/.hyprland_rice/custom.conf ]] || cp ~/.config/hypr/custom_template.conf ~/.hyprland_rice/custom.conf
 
@@ -43,6 +45,10 @@ while [[ 1 == 1 ]]; do
   fi
 
   prev_custom_conf_sha512sum="$custom_conf_sha512sum"
+
+  if ~/.config/hypr/scripts/workspace_lock.sh get > /dev/null 2>&1; then
+    hyprctl dispatch workspace "$(~/.config/hypr/scripts/workspace_lock.sh get)" > /dev/null 2>&1
+  fi
 
   # Reset and sleep.
   cd ~
