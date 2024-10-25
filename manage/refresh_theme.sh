@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 
-mkdir ~/.cache/hyprland_rice > /dev/null 2>&1
-mkdir ~/.cache/hyprland_rice/translated > /dev/null 2>&1
+source ~/.config/hypr/lib.sh
+
+mkdir -p ~/.cache/hyprland_rice > /dev/null 2>&1
+mkdir -p ~/.cache/hyprland_rice/translated > /dev/null 2>&1
+
+mkdir -p ~/.hyprland_rice/templates > /dev/null 2>&1
 
 template_files=(
   "colors.conf : $HOME/.config/hypr/colors.conf : hyprland-conf"
@@ -14,6 +18,16 @@ template_files=(
   "rofi_config.rasi : $HOME/.config/hypr/symlinks/rofi/config.rasi : rasi"
   "kitty.conf : $HOME/.config/hypr/symlinks/kitty/kitty.conf : generic"
 )
+
+theme_plugs_file_path="$HOME/.hyprland_rice/refresh_theme_plugs.txt"
+
+if [[ -f "$theme_plugs_file_path" ]]; then
+  echo "Plugging in additional user-specified files..."
+
+  while IFS= read -r line; do
+    template_files+=("$line")
+  done < "$theme_plugs_file_path"
+fi
 
 theme_path () {
   [[ -d ~/.cache/hyprland_rice/theme ]] || cp -r ~/.config/hypr/themes/gruvbox_dark ~/.cache/hyprland_rice/theme
@@ -91,17 +105,22 @@ translate_file_fast () {
 
 tf_call () {
   template_file="$HOME/.config/hypr/templates/$1"
+  generated_file="$(abs_path "$2")"
 
-  if [[ -f "$(theme_path)/overwrite/$1" ]]; then
-    template_file="$(theme_path)/overwrite/$1"
+  if [[ -f "$(theme_path)/overwrite/$(basename $1)" ]]; then
+    template_file="$(theme_path)/overwrite/$(basename $1)"
+  fi
+
+  if [[ -f "$HOME/.hyprland_rice/templates/$(basename $1)" ]]; then
+    template_file="$HOME/.hyprland_rice/templates/$(basename $1)"
   fi
 
   if command -v oglo-hyprland-rice-theme-translate-rs > /dev/null 2>&1; then
-    translate_file_fast oglo-hyprland-rice-theme-translate-rs $template_file $2 $3
+    translate_file_fast oglo-hyprland-rice-theme-translate-rs $template_file $generated_file $3
   elif [[ -f "$HOME/.cargo/bin/oglo-hyprland-rice-theme-translate-rs" ]]; then
-    translate_file_fast "$HOME/.cargo/bin/oglo-hyprland-rice-theme-translate-rs" $template_file $2 $3
+    translate_file_fast "$HOME/.cargo/bin/oglo-hyprland-rice-theme-translate-rs" $template_file $generated_file $3
   else
-    translate_file $template_file $2 $3
+    translate_file $template_file $generated_file $3
   fi
 }
 

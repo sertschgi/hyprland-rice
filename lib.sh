@@ -58,3 +58,13 @@ run_hook () {
 eww-rice () {
 	eww --config ~/.config/hypr/eww/ $*
 }
+
+abs_path () {
+    new_path="$1"
+
+    home_sed="$(echo "$HOME" | sed 's/\//\\\//g')"
+
+    [[ "$new_path" == "~"* ]] && new_path="$(echo $new_path | sed "s/^~/$home_sed/")"
+
+    echo "$new_path"
+}

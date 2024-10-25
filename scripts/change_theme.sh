@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source ~/.config/hypr/lib.sh
+
 notify_name="Theme Chooser"
 
 cache_theme_path="$HOME/.cache/hyprland_rice/theme"
@@ -41,7 +43,7 @@ if [[ "$1" == "" ]]; then
   chosen_theme="$(cat $cache_theme_list_path | sed 's/\$//g' | awk -F ' -> ' '{ print $1 }' | rofi -dmenu -p " 󰉼  Themes ")"
   
   theme_path="$(key_to_value "$cache_theme_list_path" "$chosen_theme")"
-  theme_path="$(eval "echo $theme_path")"
+  theme_path="$(abs_path "$theme_path")"
 else
   theme_path="$1"
 fi
