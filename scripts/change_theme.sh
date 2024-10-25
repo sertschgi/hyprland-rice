@@ -15,7 +15,7 @@ wallpaper_info_dir_path="${cache_theme_path}/wallpaper_info"
 rm ~/.cache/hyprland_rice/theme_list.txt > /dev/null 2>&1
 
 if [[ "$1" == "" ]]; then
-  theme_categ=$(echo -e "All\nBuilt-In\nExtra Built-In\nCustom" | rofi -dmenu -p " 󰉼  Categories ")
+  theme_categ=$(echo -e "All\nBuilt-In\nExtra Built-In\nCustom" | menu_choose " 󰉼  Categories ")
   
   echo "Chosen Category: '${theme_categ}'"
   
@@ -40,7 +40,7 @@ key_to_value () {
 theme_path=""
 
 if [[ "$1" == "" ]]; then
-  chosen_theme="$(cat $cache_theme_list_path | sed 's/\$//g' | awk -F ' -> ' '{ print $1 }' | rofi -dmenu -p " 󰉼  Themes ")"
+  chosen_theme="$(cat $cache_theme_list_path | sed 's/\$//g' | awk -F ' -> ' '{ print $1 }' | menu_choose " 󰉼  Themes ")"
   
   theme_path="$(key_to_value "$cache_theme_list_path" "$chosen_theme")"
   theme_path="$(abs_path "$theme_path")"
@@ -65,7 +65,7 @@ else
     if [[ -f "$cache_theme_path/wallpapers/list.txt" ]]; then
         wallpapers_list_path="$cache_theme_path/wallpapers/list.txt"
 
-        chosen_wallpaper="$(cat "$wallpapers_list_path" | sed 's/\$//g' | awk -F ' -> ' '{ print $1 }' | rofi -dmenu -p " 󰲍  Wallpapers ")"
+        chosen_wallpaper="$(cat "$wallpapers_list_path" | sed 's/\$//g' | awk -F ' -> ' '{ print $1 }' | menu_choose " 󰲍  Wallpapers ")"
 
         wallpaper_extension="png"
 
@@ -85,7 +85,7 @@ else
         wallpaper_path="${cache_theme_path}/wallpapers/${chosen_value}.${wallpaper_extension}"
         wallpaper_info_path="${wallpaper_path}.txt"
 
-        wallpaper_filter="$(key_to_value "$wallpaper_info_path" "filter")"
+        wallpaper_filter="$(key_to_value "$wallpaper_info_path" "filter" 2> /dev/null)"
 
         echo "$wallpaper_filter" > "${wallpaper_info_dir_path}/filter"
 
@@ -112,7 +112,11 @@ else
   echo 'null' > ~/.cache/hyprland_rice/theme_refresh_id.txt
 fi
 
-~/.config/hypr/manage/refresh_theme.sh
-~/.config/hypr/scripts/refresh_after_theme_change.sh
+HYPRCTL_FLAGS=""
+
+hyprctl reload > /dev/null 2>&1 || HYPRCTL_FLAGS+="--instance 0"
+
+hyprctl ${HYPRCTL_FLAGS} dispatch exec ~/.config/hypr/manage/refresh_theme.sh
+hyprctl ${HYPRCTL_FLAGS} dispatch exec ~/.config/hypr/scripts/refresh_after_theme_change.sh
 
 notify-send "$notify_name" "Set theme! Enjoy! <3"

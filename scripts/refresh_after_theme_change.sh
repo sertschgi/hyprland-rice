@@ -9,4 +9,4 @@ swaync-client -rs > /dev/null 2>&1
 
 set_wallpaper_themed
 
-hyprctl reload
+hyprctl reload > /dev/null

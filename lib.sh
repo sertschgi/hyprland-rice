@@ -8,6 +8,88 @@ symlinks=(
     "rofi:$HOME/.config/rofi"
 )
 
+is_tty () {
+    [[ "$XDG_SESSION_TYPE" == "tty" ]] && return 0 || return 1
+}
+
+is_number () {
+    cat /dev/null | head --lines "$1" > /dev/null 2>&1 && return 0 || return 1
+}
+
+tty_choose () {
+    piped_in="$(cat)"
+
+    prompt="$1"
+
+    message=""
+    stop_loop=0
+
+    while [[ "$stop_loop" == 0 ]]; do
+        cursor_move_up=0
+
+        line_number=1
+        while IFS= read -r line; do
+            echo -e "\033[0;36m[\033[0;96m${line_number}\033[0;36m]:\033[0m \033[0;35m${line}\033[0m" >&2
+            cursor_move_up=$(( $cursor_move_up + 1 ))
+            line_number=$(( $line_number + 1 ))
+        done < <(echo "$piped_in")
+        line_count=$(( $line_number - 1 ))
+
+        echo " " >&2
+        cursor_move_up=$(( $cursor_move_up + 1 ))
+
+        prefix=""
+        [[ "$message" == "" ]] || prefix+="[${message}] "
+
+        echo -en "\033[0;33m${prefix}(Choose Number)\033[0m \033[0;93m${prompt}\033[0m" >&2
+        read chosen < /dev/tty
+        cursor_move_up=$(( $cursor_move_up + 1 ))
+
+        is_valid=0
+
+        if is_number "$chosen"; then
+            if [[ "$chosen" -lt 1 ]]; then
+                message="Number too low!"
+            elif [[ "$chosen" -gt $(( $line_number - 1 )) ]]; then
+                message="Number too high!"
+            else
+                message=""
+                is_valid=1
+                stop_loop=1
+            fi
+        else
+            message="Please choose a number!"
+        fi
+
+        echo -en "\033[${cursor_move_up}A" >&2
+        tput ed >&2
+
+        if [[ "$is_valid" == 1 ]]; then
+            echo "$piped_in" | head --lines "$chosen" | tail --lines 1
+        fi
+    done
+}
+
+menu_choose () {
+    piped_in="$(cat)"
+
+    title="$1"
+
+    prompt="$title"
+    [[ "$prompt" == *":" ]] || [[ "$prompt" == *": " ]] || prompt="${prompt}: "
+    [[ "$prompt" == *" " ]] || prompt="${prompt} "
+
+    if is_tty; then
+        if command -v fzf > /dev/null 2>&1; then
+            echo "$piped_in" | fzf --height ~50% --prompt "$prompt" --pointer "->"
+        else
+            echo "$piped_in" | tty_choose "$prompt"
+        fi
+    else
+        echo "$piped_in" | rofi -dmenu -p "$title"
+    fi
+}
+
 get_current_wallpaper_path () {
     file_extension="png"
 
