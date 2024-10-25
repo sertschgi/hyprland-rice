@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+source ~/.config/hypr/lib.sh
+
+do_nothing () {
+  export DOING_NOTHING_AT_THE_MOMENT=69
+}
+
 cd ~
 
 prev_custom_conf_sha512sum=""
@@ -7,7 +13,7 @@ prev_custom_conf_sha512sum=""
 while [[ 1 == 1 ]]; do
   # Volume cap.
   if [[ -f ~/.hyprland_rice/disable_vol_cap ]]; then
-    echo "Volume cap disabled."
+    do_nothing
   else
     cd ~/.config/hypr/eww
 
@@ -49,6 +55,8 @@ while [[ 1 == 1 ]]; do
   if ~/.config/hypr/scripts/workspace_lock.sh get > /dev/null 2>&1; then
     hyprctl dispatch workspace "$(~/.config/hypr/scripts/workspace_lock.sh get)" > /dev/null 2>&1
   fi
+
+  swaync-client -rs > /dev/null
 
   # Reset and sleep.
   cd ~

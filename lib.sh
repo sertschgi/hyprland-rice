@@ -9,6 +9,7 @@ symlinks=(
 )
 
 is_tty () {
+    [[ "$RICE_TTY_MODE" == 1 ]] && return 0
     [[ "$XDG_SESSION_TYPE" == "tty" ]] && return 0 || return 1
 }
 

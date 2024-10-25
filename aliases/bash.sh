@@ -3,6 +3,7 @@
 alias update-rice='~/.config/hypr/manage/update.sh'
 alias reload-rice-bar='~/.config/hypr/waybar/start'
 alias take-screenshot='~/.config/hypr/scripts/screenshot.sh'
+alias change-rice-theme='RICE_TTY_MODE=1 ~/.config/hypr/scripts/change_theme.sh'
 
 query-rice-color () {
     theme_path="$HOME/.cache/hyprland_rice/theme/theme.txt"
