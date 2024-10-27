@@ -32,7 +32,7 @@ function module.apply(config)
         cursor_border = BORDER,
         selection_fg = BACKGROUND,
         selection_bg = FOREGROUND,
-        scrollbar_thumb = '#ff0000',
+        scrollbar_thumb = BORDER,
         split = BORDER,
     }
     

@@ -1,9 +1,14 @@
 -- [[ Settings ]] --
+
 local PADDING = 9
 local FONT = "JetBrainsMono Nerd Font"
 local FONT_SIZE = 16
 local WINDOW_OPACITY = 0.92
 local SHELL = "bash"
+local ENABLE_LIGATURES = false
+local DETECT_PASSWORD_INPUT = false
+local ENABLE_SCROLLBAR = false
+
 --------------------
 
 local wezterm = require("wezterm")
@@ -11,7 +16,14 @@ local colors = require("colors")
 
 local config = {}
 
+--config.line_height = 1.0
+--config.cell_width = 1.0
+
+config.detect_password_input = DETECT_PASSWORD_INPUT
+
 config.enable_wayland = false
+
+config.enable_scroll_bar = ENABLE_SCROLLBAR
 
 config.default_prog = { SHELL }
 
@@ -89,11 +101,22 @@ config.keys = {
     },
 }
 
+config.inactive_pane_hsb = {
+    saturation = 1.0,
+    brightness = 1.0,
+}
+
 config.window_background_opacity = WINDOW_OPACITY
 
 config.enable_tab_bar = false
 
 config.font = wezterm.font(FONT)
 config.font_size = FONT_SIZE
+
+if ENABLE_LIGATURES then
+    config.harfbuzz_features = {}
+else
+    config.harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' }
+end
 
 return config
