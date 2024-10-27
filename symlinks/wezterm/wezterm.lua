@@ -11,6 +11,8 @@ local colors = require("colors")
 
 local config = {}
 
+config.enable_wayland = false
+
 config.default_prog = { SHELL }
 
 colors.apply(config)
