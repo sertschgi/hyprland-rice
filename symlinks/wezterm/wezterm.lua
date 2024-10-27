@@ -15,7 +15,7 @@ config.default_prog = { SHELL }
 
 colors.apply(config)
 
-config.disable_default_key_bindings = true
+config.disable_default_key_bindings = false -- DISABLE DEFAULT KEYBINDINGS THAT COME WITH WEZTERM
 config.use_dead_keys = false
 
 config.window_padding = {
