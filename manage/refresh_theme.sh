@@ -17,6 +17,7 @@ template_files=(
   "rofi.rasi : $HOME/.config/hypr/symlinks/rofi/themes/generated.rasi : rasi"
   "rofi_config.rasi : $HOME/.config/hypr/symlinks/rofi/config.rasi : rasi"
   "kitty.conf : $HOME/.config/hypr/symlinks/kitty/kitty.conf : generic"
+  "wezterm_colors.lua : $HOME/.config/hypr/symlinks/wezterm/colors.lua : generic"
 )
 
 theme_plugs_file_path="$HOME/.hyprland_rice/refresh_theme_plugs.txt"

@@ -6,6 +6,7 @@ symlinks=(
     "alacritty:$HOME/.config/alacritty"
     "kitty:$HOME/.config/kitty"
     "rofi:$HOME/.config/rofi"
+    "wezterm:$HOME/.config/wezterm"
 )
 
 is_tty () {
