@@ -9,6 +9,10 @@ symlinks=(
     "wezterm:$HOME/.config/wezterm"
 )
 
+hyprland_version () {
+    hyprctl version | grep 'Tag: ' | cut -f2 -d ' ' | sed 's/,$//;s/^v//'
+}
+
 is_tty () {
     [[ "$RICE_TTY_MODE" == 1 ]] && return 0
     [[ "$XDG_SESSION_TYPE" == "tty" ]] && return 0 || return 1

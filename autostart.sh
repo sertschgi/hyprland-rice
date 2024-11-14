@@ -8,6 +8,8 @@ source ~/.config/hypr/lib.sh
 
 run_hook pre &
 
+~/.config/hypr/scripts/compat_swap.sh
+
 ~/.config/hypr/manage/symlinks.sh
 
 [[ -d ~/.hyprland_rice ]] || mkdir ~/.hyprland_rice
