@@ -4,7 +4,7 @@
 # Common mistake: do not source any files! (They do not exist...) #
 ###################################################################
 
-GIT_REPO_URL="https://codeberg.org/Oglo12/hyprland-rice"
+GIT_REPO_URL="https://gitlab.com/Oglo12/hyprland-rice"
 
 abort_on_existing () {
     fail_msg="Found existing file/directory, aborting... ($1)"

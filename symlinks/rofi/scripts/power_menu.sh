@@ -6,7 +6,7 @@
 #
 ## Github : @adi1090x
 #
-## Codeberg : @Oglo12
+## GitLab : @Oglo12
 #
 ## Rofi   : Power Menu
 #

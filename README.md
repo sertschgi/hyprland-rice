@@ -9,7 +9,7 @@
   4. Make sure Curl, Bash, and Git are installed.
   5. Run this command: 
   ```
-  eval "$(curl https://codeberg.org/Oglo12/hyprland-rice/raw/branch/main/manage/setup.sh)"
+  bash -c 'eval "$(curl https://gitlab.com/Oglo12/hyprland-rice/-/raw/main/manage/setup.sh)"'
   ```
   6. Start Hyprland.
   7. (Optional) Source one of the alias files into your shell. (`~/.config/hypr/aliases/*.*`)

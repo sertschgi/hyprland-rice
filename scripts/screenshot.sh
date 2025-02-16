@@ -2,7 +2,7 @@
 
 # Hyprland Screenshot Utility Script
 #
-# This script is made for OgloTheNerd's Hyprland rice (https://codeberg.org/Oglo12/hyprland-rice),
+# This script is made for OgloTheNerd's Hyprland rice (https://gitlab.com/Oglo12/hyprland-rice),
 # but this script can also work on any Hyprland rice.
 # The only requirements needed to use this script are the following commands:
 # - grim
