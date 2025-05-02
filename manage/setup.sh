@@ -27,16 +27,18 @@ verify_dir () {
 }
 
 # Verify availability for configuration.
-abort_on_existing "$HOME/.config/hypr"
+[[ "$HYPRLAND_SETUP_LOCAL" == 1 ]] || abort_on_existing "$HOME/.config/hypr"
 
 verify_dir "$HOME/.config"
 cd "$HOME/.config"
-if git clone "${GIT_REPO_URL}.git" hypr; then
-    echo "Downloaded Hyprland configuration!"
-else
-    echo "Failed to download Hyprland configuration!"
-
-    exit 1
+if [[ "$HYPRLAND_SETUP_LOCAL" != 1 ]]; then
+    if git clone "${GIT_REPO_URL}.git" hypr; then
+        echo "Downloaded Hyprland configuration!"
+    else
+        echo "Failed to download Hyprland configuration!"
+    
+        exit 1
+    fi
 fi
 
 cd "$HOME"
