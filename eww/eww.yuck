@@ -360,7 +360,7 @@
                                :y "10px"
                                :width "400px"
                                :height "0px"
-                               :anchor "top right"
+                               :anchor "top center"
                      )
            :stacking "fg"
            :windowtype "normal"
@@ -369,12 +369,12 @@
 )
 
 (defwindow powermenu-window
-           :monitor 0
-           :geometry (geometry :x "0px"
+           :monitor 0 
+           :geometry (geometry :x "10px"
                                :y "10px"
                                :width "500px"
                                :height "0px"
-                               :anchor "top center"
+                               :anchor "top right"
                      )
            :stacking "fg"
            :windowtype "normal"

@@ -61,6 +61,9 @@ lxsession &
 
 hypridle &
 
+killall mpd
+mpd ~/.config/mpd/mpd.conf &
+
 eval "sleep 2; hyprctl reload" &
 
 eval "sleep 0.5; killall flameshot; pkill flameshot" &
