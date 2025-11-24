@@ -5,6 +5,7 @@ swww img background.jpg
 pkill eww
 $HOME/.config/eww/start.sh
 
-pipewire
+pkill pipewire
+pipewire &
 
 hyprpm reload
