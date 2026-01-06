@@ -9,3 +9,5 @@ pkill pipewire
 pipewire &
 
 hyprpm reload
+
+plymouth quit
